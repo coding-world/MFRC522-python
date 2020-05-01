@@ -27,7 +27,7 @@ import signal
 import time
   
 class MFRC522:
-  NRSTPD = 22
+  NRSTPD = 25
   
   MAX_LEN = 16
   
@@ -129,7 +129,7 @@ class MFRC522:
   
   def __init__(self, dev='/dev/spidev0.0', spd=1000000):
     self.dev = spi.openSPI(device=dev,speed=spd)
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(self.NRSTPD, GPIO.OUT)
     GPIO.output(self.NRSTPD, 1)
     self.MFRC522_Init()
@@ -361,6 +361,7 @@ class MFRC522:
     i = 0
     if len(backData) == 16:
       print "Sector "+str(blockAddr)+" "+str(backData)
+      return backData
   
   def MFRC522_Write(self, blockAddr, writeData):
     buff = []
